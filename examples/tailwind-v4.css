@@ -1,0 +1,19 @@
+/* Tailwind v4: import the generated theme.css before this file. */
+@theme inline {
+  --color-wada-background: var(--wada-background);
+  --color-wada-surface: var(--wada-surface);
+  --color-wada-text: var(--wada-text);
+  --color-wada-muted-text: var(--wada-muted-text);
+  --color-wada-border: var(--wada-border);
+  --color-wada-primary: var(--wada-primary);
+  --color-wada-on-primary: var(--wada-on-primary);
+  --color-wada-accent: var(--wada-accent);
+  --color-wada-on-accent: var(--wada-on-accent);
+  --color-wada-palette1: var(--wada-palette1);
+  --color-wada-palette2: var(--wada-palette2);
+  --color-wada-link: var(--wada-link);
+  --color-wada-focus: var(--wada-focus);
+  --color-wada-input-border: var(--wada-input-border);
+  --color-wada-primary-hover: var(--wada-primary-hover);
+  --color-wada-on-primary-hover: var(--wada-on-primary-hover);
+}

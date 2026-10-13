@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "paletteId": 14,
+  "appearance": "light",
+  "mode": "faithful",
+  "originalColors": [
+    "#f27291",
+    "#fbe6a0"
+  ],
+  "tokens": {
+    "background": "#ffffff",
+    "surface": "#f6f6f6",
+    "text": "#111111",
+    "mutedText": "#555555",
+    "border": "#dddddd",
+    "primary": "#f27291",
+    "onPrimary": "#000000",
+    "accent": "#fbe6a0",
+    "onAccent": "#000000",
+    "palette1": "#f27291",
+    "palette2": "#fbe6a0",
+    "link": "#111111",
+    "focus": "#111111",
+    "inputBorder": "#777777",
+    "primaryHover": "#f27291",
+    "onPrimaryHover": "#000000"
+  },
+  "provenance": {
+    "background": {
+      "kind": "supporting-neutral"
+    },
+    "surface": {
+      "kind": "supporting-neutral"
+    },
+    "text": {
+      "kind": "supporting-neutral"
+    },
+    "mutedText": {
+      "kind": "supporting-neutral"
+    },
+    "border": {
+      "kind": "supporting-neutral"
+    },
+    "primary": {
+      "kind": "original",
+      "sourceHex": "#f27291",
+      "paletteId": 14
+    },
+    "onPrimary": {
+      "kind": "supporting-neutral"
+    },
+    "accent": {
+      "kind": "original",
+      "sourceHex": "#fbe6a0",
+      "paletteId": 14
+    },
+    "onAccent": {
+      "kind": "supporting-neutral"
+    },
+    "palette1": {
+      "kind": "original",
+      "sourceHex": "#f27291",
+      "paletteId": 14
+    },
+    "palette2": {
+      "kind": "original",
+      "sourceHex": "#fbe6a0",
+      "paletteId": 14
+    },
+    "link": {
+      "kind": "supporting-neutral"
+    },
+    "focus": {
+      "kind": "supporting-neutral"
+    },
+    "inputBorder": {
+      "kind": "supporting-neutral"
+    },
+    "primaryHover": {
+      "kind": "original",
+      "sourceHex": "#f27291",
+      "paletteId": 14
+    },
+    "onPrimaryHover": {
+      "kind": "supporting-neutral"
+    }
+  },
+  "validation": {
+    "passes": true,
+    "checks": [
+      {
+        "foreground": "text",
+        "background": "background",
+        "minimum": 4.5,
+        "ratio": 18.883060964594996,
+        "passes": true
+      },
+      {
+        "foreground": "text",
+        "background": "surface",
+        "minimum": 4.5,
+        "ratio": 17.472799451598597,
+        "passes": true
+      },
+      {
+        "foreground": "mutedText",
+        "background": "surface",
+        "minimum": 4.5,
+        "ratio": 6.898395710430385,
+        "passes": true
+      },
+      {
+        "foreground": "mutedText",
+        "background": "background",
+        "minimum": 4.5,
+        "ratio": 7.455177810447525,
+        "passes": true
+      },
+      {
+        "foreground": "onPrimary",
+        "background": "primary",
+        "minimum": 4.5,
+        "ratio": 7.591241378728366,
+        "passes": true
+      },
+      {
+        "foreground": "onPrimaryHover",
+        "background": "primaryHover",
+        "minimum": 4.5,
+        "ratio": 7.591241378728366,
+        "passes": true
+      },
+      {
+        "foreground": "onAccent",
+        "background": "accent",
+        "minimum": 4.5,
+        "ratio": 16.928184738243843,
+        "passes": true
+      },
+      {
+        "foreground": "link",
+        "background": "background",
+        "minimum": 4.5,
+        "ratio": 18.883060964594996,
+        "passes": true
+      },
+      {
+        "foreground": "link",
+        "background": "surface",
+        "minimum": 4.5,
+        "ratio": 17.472799451598597,
+        "passes": true
+      },
+      {
+        "foreground": "focus",
+        "background": "background",
+        "minimum": 3,
+        "ratio": 18.883060964594996,
+        "passes": true
+      },
+      {
+        "foreground": "focus",
+        "background": "surface",
+        "minimum": 3,
+        "ratio": 17.472799451598597,
+        "passes": true
+      },
+      {
+        "foreground": "inputBorder",
+        "background": "surface",
+        "minimum": 3,
+        "ratio": 4.1436480608403095,
+        "passes": true
+      },
+      {
+        "foreground": "inputBorder",
+        "background": "background",
+        "minimum": 3,
+        "ratio": 4.478089453577214,
+        "passes": true
+      }
+    ],
+    "scope": "Specified opaque sRGB token pairs only. Rendered layouts, images, opacity, focus geometry and complete WCAG compliance require separate review."
+  },
+  "guidance": [
+    "Use primary and accent for emphasis; neutral surfaces keep the original colors distinct.",
+    "Underline links. Use a 2px focus outline with a 3px offset so it contrasts with the page surface.",
+    "Faithful hover may use an underline or inset outline; it keeps the original color.",
+    "Preserve existing success, warning and error semantics; this theme does not assign status colors.",
+    "Keep the page layout, typography, images and logos unless the user requests changes."
+  ],
+  "source": {
+    "title": "A Dictionary of Color Combinations",
+    "author": "Sanzo Wada",
+    "url": "https://colors.elwyn.co/",
+    "combination": 14
+  }
+}

@@ -1,0 +1,17 @@
+/* Existing neutral blue theme; the same semantic roles are recolored in after.html. */
+:root {
+  --wada-background: #ffffff;
+  --wada-surface: #f6f6f6;
+  --wada-text: #111111;
+  --wada-muted-text: #555555;
+  --wada-primary: #2458b3;
+  --wada-on-primary: #ffffff;
+  --wada-primary-hover: #19468f;
+  --wada-on-primary-hover: #ffffff;
+  --wada-accent: #e0e9fb;
+  --wada-on-accent: #111111;
+  --wada-link: #2458b3;
+  --wada-border: #dddddd;
+  --wada-input-border: #777777;
+  --wada-focus: #2458b3;
+}

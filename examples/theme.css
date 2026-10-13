@@ -1,0 +1,19 @@
+/* Sanzo Wada combination #14; faithful; light */
+:root {
+  --wada-background: #ffffff;
+  --wada-surface: #f6f6f6;
+  --wada-text: #111111;
+  --wada-muted-text: #555555;
+  --wada-border: #dddddd;
+  --wada-primary: #f27291;
+  --wada-on-primary: #000000;
+  --wada-accent: #fbe6a0;
+  --wada-on-accent: #000000;
+  --wada-palette1: #f27291;
+  --wada-palette2: #fbe6a0;
+  --wada-link: #111111;
+  --wada-focus: #111111;
+  --wada-input-border: #777777;
+  --wada-primary-hover: #f27291;
+  --wada-on-primary-hover: #000000;
+}

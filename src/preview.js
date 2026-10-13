@@ -1,0 +1,45 @@
+import { readFileSync } from 'node:fs';
+import { listPalettes, categories } from './catalog.js';
+import { buildTheme } from './engine.js';
+
+const clientSource = readFileSync(new URL('./gallery-client.js', import.meta.url), 'utf8');
+
+const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const safeJson = value => JSON.stringify(value).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+
+export function renderPreview(result, { title = 'Your Wada themes' } = {}) {
+  if (!result || !Array.isArray(result.recommendations)) throw new TypeError('Expected a recommendation result.');
+  return documentHtml(result.recommendations.map(r => ({ palette: r.palette, theme: r.theme,
+    variants: { [`${r.theme.appearance}-${r.theme.mode}`]: r.theme }, reasons: r.reasons })), { title, gallery: false });
+}
+
+export function renderGallery() {
+  const entries = listPalettes().map(palette => {
+    const variants = {};
+    for (const appearance of ['light', 'dark']) for (const mode of ['faithful', 'adapted']) {
+      const theme = buildTheme({ paletteId: palette.id, appearance, mode });
+      // The gallery needs tokens and provenance; contrast details are available through CLI/MCP.
+      variants[`${appearance}-${mode}`] = { ...theme, validation: { passes: theme.validation.passes, scope: theme.validation.scope }, guidance: undefined };
+    }
+    return { palette, variants };
+  });
+  return documentHtml(entries, { title: 'Wada Theme — a feeling in color', gallery: true });
+}
+
+function documentHtml(entries, { title, gallery }) {
+  const categoryData = categories.map(({ id, description }) => ({ id, description }));
+  // Browser behavior is self-contained: no CDN, remote fonts, network requests or telemetry.
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escape(title)}</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f4f1e9;color:#22251f;font:15px/1.5 system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button,select{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.shell{max-width:1440px;margin:auto;padding:32px 48px 64px}.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbc8bd;padding-bottom:20px}.brand{font-weight:700;letter-spacing:-.5px;font-size:21px}.edition{font-size:11px;letter-spacing:1.6px;text-transform:uppercase}.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;padding:52px 0 36px;align-items:end}h1{font:normal clamp(36px,5vw,65px)/1.04 Georgia,serif;letter-spacing:-2px;margin:0;max-width:700px}.intro p{color:#51554b;max-width:440px;margin:0 0 5px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:17px}.toolbar{padding:22px 0;border-top:1px solid #cbc8bd;border-bottom:1px solid #cbc8bd}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.search{flex:1;min-width:180px}.search input{width:100%;padding:11px 14px;background:#fffdf8;border:1px solid #b8b9ac;border-radius:4px}.select-label{display:flex;align-items:center;gap:8px;font-size:12px}select{padding:11px 10px;background:#fffdf8;border:1px solid #b8b9ac;border-radius:4px}.moods{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0 0}.pill{border:1px solid #b8b9ac;border-radius:24px;padding:7px 14px;background:transparent;text-transform:capitalize;font-size:12px}.pill[aria-pressed=true]{background:#273629;color:#fff;border-color:#273629}.results-line{display:flex;justify-content:space-between;font-size:12px;color:#5b6055;margin:23px 0 15px;gap:16px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{overflow:hidden;border:1px solid #d0d0c3;border-radius:7px;background:#fffdf8}.sample{padding:20px;background:var(--wada-background);color:var(--wada-text);min-height:332px}.sample-nav{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:27px}.sample-logo{font-weight:700;letter-spacing:1px}.sample-nav a{color:var(--wada-link);text-decoration:underline}.sample small{color:var(--wada-muted-text);font-size:10px;letter-spacing:1.5px}.sample h2{font:normal 29px/1.13 Georgia,serif;letter-spacing:-.6px;margin:9px 0 13px}.sample p{font-size:11px;color:var(--wada-muted-text);max-width:280px}.sample button{font-size:11px;background:var(--wada-primary);color:var(--wada-on-primary);border:0;border-radius:3px;padding:9px 13px}.sample button:hover{background:var(--wada-primary-hover);color:var(--wada-on-primary-hover);text-decoration:underline}.sample :focus-visible{outline:2px solid var(--wada-focus);outline-offset:3px}.mini-card{margin-top:23px;padding:12px;background:var(--wada-surface);border:1px solid var(--wada-border);border-radius:4px;display:flex;align-items:center;gap:10px}.mini-color{width:32px;height:32px;border-radius:50%;background:var(--wada-accent);flex-shrink:0}.mini-card p{margin:1px 0}.mini-card strong{font-size:11px}.swatches{display:flex;height:45px}.swatch{flex:1;display:flex;align-items:center;justify-content:center;font:10px ui-monospace,monospace}.meta{padding:17px 18px}.meta-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.number{font:23px Georgia,serif}.badge{font-size:10px;background:#e7ecdf;color:#304c2f;padding:4px 7px;border-radius:3px}.names{font-size:11px;color:#62665d;min-height:34px;margin:9px 0}.tags{font-size:10px;text-transform:capitalize;color:#4e6547}.exports{display:flex;gap:8px;margin-top:13px}.export{border:1px solid #d0d0c3;background:transparent;padding:6px 10px;border-radius:3px;font-size:11px}.more{display:block;margin:30px auto 0;padding:10px 26px;background:#273629;color:white;border:0;border-radius:4px}.footer{margin-top:46px;padding-top:20px;border-top:1px solid #cbc8bd;color:#5b6055;font-size:11px;display:flex;gap:30px;justify-content:space-between}.footer a{color:inherit}.notice{font-size:11px;color:#62665d;margin:14px 0 0}.empty{grid-column:1/-1;padding:50px;text-align:center}.live{min-height:22px;font-size:12px;color:#304c2f;margin-top:12px}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{padding:24px}.intro{gap:24px}}@media(max-width:650px){.grid{grid-template-columns:1fr}.intro{grid-template-columns:1fr;padding:34px 0;gap:22px}.shell{padding:20px}.edition{max-width:145px;text-align:right;font-size:9px}.footer{display:block}.results-line{display:block}h1{letter-spacing:-1px}}
+</style></head><body><main class="shell"><header class="top"><div class="brand">wada theme<span style="color:#62765c">.</span></div><div class="edition">Sanzo Wada<br>348 combinations / 159 colors</div></header>
+<section class="intro"><div><div class="eyebrow">A dictionary, brought to your page</div><h1>A different feeling.<br>The same page.</h1></div><p>Explore ${gallery ? '348' : entries.length} color combinations through a familiar page. Find your mood, compare the results, and take the colors into your own project.</p></section>
+${gallery ? `<section class="toolbar" aria-label="Theme filters"><div class="controls"><label class="search"><span class="edition">Search colors or combination number</span><input id="search" placeholder="Pink, indigo, #f27291, or 14" type="search"></label><label class="select-label">Appearance<select id="appearance"><option value="light">Light</option><option value="dark">Dark</option></select></label><label class="select-label">Colors<select id="mode"><option value="faithful">Original + neutrals</option><option value="adapted">With tints & shades</option></select></label></div><div class="moods" id="moods" aria-label="Filter by feeling"><button class="pill" data-mood="" aria-pressed="true">All moods</button>${categoryData.map(c => `<button class="pill" data-mood="${c.id}" title="${escape(c.description)}" aria-pressed="false">${c.id}</button>`).join('')}</div></section>` : ''}
+<div class="results-line"><span id="count"></span><span>Original colors below each preview · Supporting colors keep text readable</span></div><section class="grid" id="grid" aria-label="Theme previews"></section><button class="more" id="more" hidden>Show more combinations</button><div class="live" id="status" role="status" aria-live="polite"></div><p class="notice">Mood suggestions are interpretations awaiting design review. Token contrast checks do not establish full page accessibility.</p><footer class="footer"><span>Palettes from <em>A Dictionary of Color Combinations</em>, Sanzo Wada.<br>Data: Matt DesLauriers / Dain M. Blodorn Kim · Website source: Ben Elwyn.</span><span><a href="https://colors.elwyn.co/">Original collection ↗</a> · Offline preview, no tracking</span></footer></main>
+<script type="application/json" id="data">${safeJson(entries)}</script><script>const gallery=${gallery};
+${clientSource}
+</script></body></html>`;
+}

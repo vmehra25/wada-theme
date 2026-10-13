@@ -1,0 +1,21 @@
+{
+  "name": "wada-theme",
+  "version": "0.1.0",
+  "description": "Turn Sanzo Wada palettes into usable website themes through code, CLI, or MCP.",
+  "type": "module",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/vmehra25/wada-theme.git" },
+  "homepage": "https://github.com/vmehra25/wada-theme#readme",
+  "bugs": { "url": "https://github.com/vmehra25/wada-theme/issues" },
+  "engines": { "node": ">=20" },
+  "exports": { ".": "./src/index.js", "./mcp": "./src/mcp.js" },
+  "bin": { "wada-theme": "./bin/wada-theme.js" },
+  "files": ["src", "bin", "data", "skills", "examples", "licenses", "NOTICE.md", "README.md", "CONTRIBUTING.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test",
+    "mcp": "node bin/wada-theme.js mcp",
+    "demo": "node bin/wada-theme.js gallery --out examples/gallery.html"
+  },
+  "dependencies": { "@modelcontextprotocol/server": "2.3.1", "zod": "4.6.7" },
+  "devDependencies": { "@modelcontextprotocol/client": "2.3.1" }
+}
